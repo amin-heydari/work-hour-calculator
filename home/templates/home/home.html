@@ -1,0 +1,138 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <title>home</title>
+    <link rel="stylesheet" href="{% static 'home.css' %}">
+        <!-- Include jQuery -->
+<!-- Include jQuery first -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Then include jalalidatepicker JS and CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/jalalidatepicker@0.6.0/dist/jalalidatepicker.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/jalalidatepicker@0.6.0/dist/jalalidatepicker.min.css" rel="stylesheet">
+
+</head>
+<body>
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert {{ message.tags }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+    <div class="wrapper">
+        <div class="title">
+            {{ request.user.username }}
+        </div>
+<form method="post" action="{% url 'work_session' %}">
+    <input type="hidden" name="dummy_field">
+
+    {% csrf_token %}
+        <div class="field">
+            <label id="jalali-date-label">Today: {{ today_jalali }}</label>
+        </div>
+    <div class="field">
+        <select name="work_mode" id="work_mode">
+            <option value="" disabled {% if not existing_session %} selected {% endif %}>Select Work Mode</option>
+            <option value="in_person" {% if existing_session.work_mode == "in_person" %} selected {% endif %}>In-Person</option>
+            <option value="remote" {% if existing_session.work_mode == "remote" %} selected {% endif %}>Remote</option>
+        </select>
+    </div>
+
+    <div class="field with-button">
+        <input type="text" name="start_time" id="start_time"
+               placeholder="Start Time"
+               onfocus="changeInputType(this)"
+               value="{{ existing_session.start_time|default:'' }}"
+               required>
+        <button type="button" onclick="setCurrentTime('start_time')">Set to Now</button>
+        <label for="start_time">Start Time</label>
+    </div>
+
+    <div class="field with-button">
+        <input type="text" name="end_time" id="end_time"
+               placeholder="End Time"
+               onfocus="changeInputType(this)"
+               value="{{ existing_session.end_time|default:'' }}"
+               required>
+        <button type="button" onclick="setCurrentTime('end_time')">Set to Now</button>
+        <label for="end_time">End Time</label>
+    </div>
+
+    <div class="field">
+        <input type="submit" value="Submit" onclick="removeRequiredFromEndTime()">
+    </div>
+    <div >
+        <div class="button-container">
+            <button type="button" id="toggleDatePicker">download ⬇</button>
+        </div>
+            <div id="datePickerContainer" style="display: none;">
+            <input id="start_date_jalali" type="text" data-jdp placeholder="Start Date" />
+            <input id="end_date_jalali" type="text" data-jdp placeholder="End Date" />
+            <button type="button" onclick="downloadFile()">Download Records</button>
+        </div>
+    </div>
+    {% if form.errors %}
+        <p class="error">{{ form.errors }}</p>
+    {% endif %}
+</form>
+    </div>
+
+    <script>
+        function removeRequiredFromEndTime() {
+            document.getElementById('end_time').removeAttribute('required');
+        }
+        function changeInputType(input) {
+            input.type = 'time';
+        }
+        function setCurrentTime(fieldId) {
+            var field = document.getElementById(fieldId);
+            if (field.type !== 'time') {
+                field.type = 'time';
+            }
+
+            var now = new Date();
+            var hours = now.getHours().toString().padStart(2, '0');
+            var minutes = now.getMinutes().toString().padStart(2, '0');
+            field.value = hours + ':' + minutes;
+        }
+        jalaliDatepicker.startWatch({
+          minDate: "attr",
+          maxDate: "attr"
+        });
+
+    $(document).ready(function() {
+        // Initialize Persian Datepicker
+        // ...
+
+        // Toggle date picker visibility
+        $('#toggleDatePicker').click(function() {
+            $('#datePickerContainer').toggle();
+        });
+    });
+function downloadFile() {
+    var startDate = $('#start_date_jalali').val();
+    var endDate = $('#end_date_jalali').val();
+
+    if (startDate && endDate) {
+        var downloadUrl = '/download/?start_date=' + encodeURIComponent(startDate) + '&end_date=' + encodeURIComponent(endDate);
+
+        // Create a temporary link to trigger the download
+        var tempLink = document.createElement('a');
+        tempLink.href = downloadUrl;
+        tempLink.setAttribute('download', 'records.csv');
+        tempLink.style.display = 'none';
+        document.body.appendChild(tempLink);
+        tempLink.click();
+        document.body.removeChild(tempLink);
+    } else {
+        alert("Please select both start and end dates.");
+    }
+}
+
+</script>
+
+</body>
+</html>

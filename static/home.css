@@ -1,0 +1,244 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+html,body{
+  display: grid;
+  height: 100%;
+  width: 100%;
+  place-items: center;
+  background: #f2f2f2;
+  /* background: linear-gradient(-135deg, #c850c0, #4158d0); */
+}
+::selection{
+  background: #4158d0;
+  color: #fff;
+}
+.wrapper{
+  width: 380px;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0px 15px 20px rgba(0,0,0,0.1);
+}
+.wrapper .title{
+  font-size: 35px;
+  font-weight: 600;
+  text-align: center;
+  line-height: 100px;
+  color: #fff;
+  user-select: none;
+  border-radius: 15px 15px 0 0;
+  background: linear-gradient(-135deg, #c850c0, #4158d0);
+}
+.wrapper form{
+  padding: 10px 30px 50px 30px;
+}
+.wrapper form .field{
+  height: 50px;
+  width: 100%;
+  margin-top: 20px;
+  position: relative;
+}
+.wrapper form .field input{
+  height: 100%;
+  width: 100%;
+  outline: none;
+  font-size: 17px;
+  padding-left: 20px;
+  border: 1px solid lightgrey;
+  border-radius: 25px;
+  transition: all 0.3s ease;
+}
+.wrapper form .field input:focus,
+form .field input:valid{
+  border-color: #4158d0;
+}
+.wrapper form .field label{
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  color: #999999;
+  font-weight: 400;
+  font-size: 17px;
+  pointer-events: none;
+  transform: translateY(-50%);
+  transition: all 0.3s ease;
+}
+form .field input:focus ~ label,
+form .field input:valid ~ label{
+  top: 0%;
+  font-size: 16px;
+  color: #4158d0;
+  background: #fff;
+  transform: translateY(-50%);
+}
+form .content{
+  display: flex;
+  width: 100%;
+  height: 50px;
+  font-size: 16px;
+  align-items: center;
+  justify-content: space-around;
+}
+form .content .checkbox{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+form .content input{
+  width: 15px;
+  height: 15px;
+  background: red;
+}
+form .content label{
+  color: #262626;
+  user-select: none;
+  padding-left: 5px;
+}
+form .content .pass-link{
+  color: "";
+}
+form .field input[type="submit"]{
+  color: #fff;
+  border: none;
+  padding-left: 0;
+  margin-top: -10px;
+  font-size: 20px;
+  font-weight: 500;
+  cursor: pointer;
+  background: linear-gradient(-135deg, #c850c0, #4158d0);
+  transition: all 0.3s ease;
+}
+form .field input[type="submit"]:active{
+  transform: scale(0.95);
+}
+form .signup-link{
+  color: #262626;
+  margin-top: 20px;
+  text-align: center;
+}
+form .pass-link a,
+form .signup-link a{
+  color: #4158d0;
+  text-decoration: none;
+}
+form .pass-link a:hover,
+form .signup-link a:hover{
+  text-decoration: underline;
+}
+
+.wrapper form .field select {
+    height: 50px;
+    width: 100%;
+    margin-top: -30px;
+    padding: 0 20px;
+    border: 1px solid lightgrey;
+    border-radius: 25px;
+    font-size: 17px;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: white;
+}
+
+.wrapper form .field select:focus {
+    border-color: #4158d0;
+}
+
+/* Optional: Add a pseudo-element for a custom dropdown arrow */
+.wrapper form .field select {
+    position: relative;
+    color: #999999;
+}
+
+.wrapper form .field select + label::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    border: 5px solid transparent;
+    border-top-color: #4158d0;
+    pointer-events: none;
+}
+.wrapper form .field select:focus {
+    color: #1856c5; /* Change to your preferred color for selected option */
+}
+
+.wrapper form .field {
+    height: 50px;
+    width: 100%;
+    position: relative;
+}
+
+.wrapper form .field.with-button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.wrapper form .field.with-button input {
+    flex-grow: 1;
+    margin-right: 10px; /* Adjust the space between the input and the button */
+}
+
+.wrapper form .field.with-button button {
+    padding: 2px 6px;
+    font-size: 16px;
+    color: #fff;
+    background: linear-gradient(-135deg, #c850c0, #4158d0);
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Ensure transition for smooth hover effect */
+}
+
+.wrapper form .field.with-button button:hover {
+    background: #9523ac; /* Simplified background for hover */
+}
+.wrapper form .field #jalali-date-label {
+    color: #999999;
+}
+.alert {
+    margin: 20px;
+    padding: 10px;
+    background-color: #d4edda; /* Light green background */
+    color: #155724; /* Dark green text */
+    border-radius: 5px;
+    text-align: center;
+}
+#toggleDatePicker {
+    right: 0;          /* Align it to the right side of the nearest positioned ancestor */
+    top: 20px;         /* Adjust the top as needed for correct vertical placement */
+
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    color: #4158d0;
+    /* Add any additional styling as needed */
+}
+.button-container {
+    text-align: right; /* Aligns child elements (like your button) to the right */
+}
+#start_date_jalali, #end_date_jalali {
+    height: 50px; /* Adjust this value to match your other inputs */
+    width: 100%;
+    outline: none;
+    font-size: 17px;
+    padding-left: 20px;
+    border: 1px solid lightgrey;
+    border-radius: 25px;
+    margin-bottom: 15px;
+}
+#start_date_jalali, #end_date_jalali {
+    padding: 10px 20px; /* Adjust top and bottom padding to increase height */
+    width: 100%;
+    font-size: 17px;
+    border: 1px solid lightgrey;
+    border-radius: 25px;
+}
